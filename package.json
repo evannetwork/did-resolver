@@ -1,0 +1,34 @@
+{
+  "name": "@evan.network/did-resolver",
+  "version": "1.0.0",
+  "description": "Resolving DIDs on the evan.network by calling the resolver smart agent",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evannetwork/did-resolver.git"
+  },
+  "keywords": [
+    "evan.network",
+    "DID",
+    "resolver"
+  ],
+  "author": "evan GmbH",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/evannetwork/did-resolver/issues"
+  },
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/register": "^7.7.4"
+  },
+  "scripts": {
+    "prepublish": "tsc",
+    "build": "tsc"
+  }
+}
