@@ -8,8 +8,8 @@ const{
     EvanDIDResolver
  } = require('@evan.network/did-resolver')
 
-const resolver = new EvanDIDResolver("https://evan.network/did/api");
-const did = "did:evan:0x126E901F6F408f5E260d95c62E7c73D9B60fd734";
+const resolver = new EvanDIDResolver('https://testcore.evan.network/did');
+const did = 'did:evan:testcore:0x126E901F6F408f5E260d95c62E7c73D9B60fd734';
 try {
     const didDocument: EvanDIDDocument = resolver.resolve(did);
     console.log(didDocument);
