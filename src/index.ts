@@ -1,25 +1,45 @@
 var request = require('request-promise-native');
 
-export interface EvanDIDDocument {
-    '@context': string;
+export interface ServiceEndpoint {
     id: string;
-    publicKey: {
-        id: string;
-        type: string[];
-        publicKeyHex: string;
-    }[];
-    authentication: {
-        type: string;
-        publicKey: string;
-    } | {
-        type: string;
-        publicKey: string;
-    }[];
-    service?: {
-        id: string;
-        type: string;
-        serviceEndpoint: string;
-    }[];
+    type: string;
+    serviceEndpoint: string;
+    [key: string]: string;
+}
+
+export interface PublicKey {
+    id: string;
+    type: string[];
+    publicKeyHex?: string
+    publicKeyBase58?: string
+    publicKeyBase64?: string
+    ethereumAddress?: string
+    publicKeyPem?: string
+}
+
+export interface VerificationMethod {
+    id: string;
+    type: string;
+    controller: string;
+    publicKeyHex?: string
+    publicKeyBase58?: string
+    publicKeyBase64?: string
+    ethereumAddress?: string
+    publicKeyPem?: string
+}
+
+export interface EvanDIDDocument {
+    '@context': string|string[];
+    id: string;
+    alsoKnownAs?: string[];
+    publicKey: PublicKey[]; // Deprecated, kept for backwards compatibility
+    verificationMethod: VerificationMethod[];
+    authentication?: (string|VerificationMethod)[];
+    assertionMethod?: (string|VerificationMethod)[];
+    keyAgreement?: (string|VerificationMethod)[];
+    capabilityInvocation?: (string|VerificationMethod)[];
+    capabilityDelegation?: (string|VerificationMethod)[];
+    service?: ServiceEndpoint[];
 }
 
 export class EvanDIDResolver {
