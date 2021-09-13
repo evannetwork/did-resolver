@@ -1,5 +1,4 @@
-var request = require('request-promise-native');
-
+import request from 'request-promise-native';
 export interface EvanDIDDocument {
     '@context': string;
     id: string;
@@ -21,6 +20,26 @@ export interface EvanDIDDocument {
         serviceEndpoint: string;
     }[];
 }
+export interface EvanSidetreeDidDocument {
+    "@context": any[];
+    id: string;
+    publicKey: {
+      id: string;
+      controller: string;
+      type: string;
+      publicKeyJwk: any[];
+    }[];
+    authentication: string[];
+    assertionMethod: string[];
+    capabilityInvocation: string[];
+    capabilityDelegation: string[];
+    keyAgreement: string[];
+    service: {
+      id: string;
+      type: string;
+      serviceEndpoint: string;
+    }[];
+  }
 
 export class EvanDIDResolver {
 
@@ -30,15 +49,17 @@ export class EvanDIDResolver {
         this.smartAgentUrl = apiUrl;
     }
 
-    public async resolveDid(did: String): Promise<EvanDIDDocument> {
+    public async resolveDid(did: String): Promise<EvanDIDDocument | EvanSidetreeDidDocument> {
         return new Promise((resolve, reject) => {
             const url = this.smartAgentUrl.replace(/\/$/, "") + `/${did}`;
-            let didDoc: EvanDIDDocument;
+            let didDoc: EvanDIDDocument | EvanSidetreeDidDocument;
             console.log(url);
             request.get(url)
             .then(function(response) {
                 try {
-                    didDoc = JSON.parse(response).did;
+                    const res = JSON.parse(response);
+                    didDoc = res.did ?? res.didDocument;
+
                 } catch (e) {
                     reject(e);
                 }
